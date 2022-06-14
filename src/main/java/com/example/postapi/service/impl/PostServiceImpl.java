@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll()
                 .stream()
                 .map(post -> modelMapper.map(post, GenericPostResponse.class))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -70,7 +71,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostsByAuthor(author)
                 .stream()
                 .map(postAuthor -> modelMapper.map(postAuthor, GenericPostResponse.class))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,7 +79,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostsByCategory(category)
                 .stream()
                 .map(postCategory -> modelMapper.map(postCategory, GenericPostResponse.class))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -88,7 +89,7 @@ public class PostServiceImpl implements PostService {
                 .map(post -> modelMapper.map(post, GenericPostResponse.class))
                 .sorted(Comparator.comparing(GenericPostResponse::getCreatedAt).reversed())
                 .limit(3)
-                .toList();
+                .collect(Collectors.toList());
 
     }
 }
